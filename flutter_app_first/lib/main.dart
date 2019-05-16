@@ -9,8 +9,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Startup Name Generator',
-      theme: ThemeData(          // Add the 3 lines from here...
-        primaryColor: Colors.white,
+      theme: ThemeData(
+        primaryColor: Colors.blue,
         accentColor: Colors.greenAccent,
       ),
       home: RandomWords(),
@@ -34,6 +34,49 @@ class RandomWordsState extends State<RandomWords> {
         ],
       ),
       body: _buildSuggestions(),
+      drawer: _buildDrawer(),
+    );
+  }
+
+  Widget _buildDrawer() {
+    return Drawer(
+      // Add a ListView to the drawer. This ensures the user can scroll
+      // through the options in the Drawer if there isn't enough vertical
+      // space to fit everything.
+      child: ListView(
+        // Important: Remove any padding from the ListView.
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          UserAccountsDrawerHeader(
+            accountName: Text("Aleksey Konovalov"),
+            accountEmail: Text("aleksey.konovalov@gmail.com"),
+            currentAccountPicture: CircleAvatar(
+              backgroundColor:
+              Theme.of(context).platform == TargetPlatform.iOS
+                  ? Colors.blue
+                  : Colors.white,
+              child: Text(
+                "A",
+                style: TextStyle(fontSize: 40.0),
+              ),
+            ),
+          ),
+          ListTile(
+            title: Text('Item 1'),
+            onTap: () {
+              // Update the state of the app
+              // ...
+            },
+          ),
+          ListTile(
+            title: Text('Item 2'),
+            onTap: () {
+              // Update the state of the app
+              // ...
+            },
+          ),
+        ],
+      ),
     );
   }
 
@@ -79,8 +122,6 @@ class RandomWordsState extends State<RandomWords> {
     );
   }
 
-
-
   void _showToast(String message) {
     Fluttertoast.showToast(
         msg: message,
@@ -91,11 +132,19 @@ class RandomWordsState extends State<RandomWords> {
         fontSize: 16.0);
   }
 
+  Scaffold _openSavedWordsScreen(List<Widget> divided){
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Saved Suggestions'),
+      ),
+      body: ListView(children: divided),
+    );
+  }
+
   void _pushSaved() {
     Navigator.of(context).push(
       MaterialPageRoute<void>(
         builder: (BuildContext context) {
-
           final Iterable<ListTile> tiles = _saved.map(
             (WordPair pair) {
               return ListTile(
@@ -112,12 +161,7 @@ class RandomWordsState extends State<RandomWords> {
             tiles: tiles,
           ).toList();
 
-          return Scaffold(
-            appBar: AppBar(
-              title: Text('Saved Suggestions'),
-            ),
-            body: ListView(children: divided),
-          );
+          _openSavedWordsScreen(divided);
         },
       ),
     );
@@ -128,3 +172,4 @@ class RandomWords extends StatefulWidget {
   @override
   RandomWordsState createState() => new RandomWordsState();
 }
+
