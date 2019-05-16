@@ -1,6 +1,7 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_app_first/SavedWordsScreen.dart';
 
 void main() => runApp(MyApp());
 
@@ -132,15 +133,6 @@ class RandomWordsState extends State<RandomWords> {
         fontSize: 16.0);
   }
 
-  Scaffold _openSavedWordsScreen(List<Widget> divided){
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Saved Suggestions'),
-      ),
-      body: ListView(children: divided),
-    );
-  }
-
   void _pushSaved() {
     Navigator.of(context).push(
       MaterialPageRoute<void>(
@@ -161,7 +153,7 @@ class RandomWordsState extends State<RandomWords> {
             tiles: tiles,
           ).toList();
 
-          _openSavedWordsScreen(divided);
+          return SavedWordsScreen(divided);
         },
       ),
     );
