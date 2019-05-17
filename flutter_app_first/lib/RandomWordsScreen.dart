@@ -2,6 +2,7 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_app_first/SavedWordsScreen.dart';
+import 'package:flutter_app_first/TestUIScreen.dart';
 
 class RandomWordsScreen extends StatefulWidget {
   @override
@@ -17,7 +18,7 @@ class RandomWordsScreenState extends State<RandomWordsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Startup Name Generator'),
+        title: Text('Flutter Test App'),
         actions: <Widget>[
           IconButton(icon: Icon(Icons.list), onPressed: _pushSaved),
         ],
@@ -51,10 +52,11 @@ class RandomWordsScreenState extends State<RandomWordsScreen> {
             ),
           ),
           ListTile(
-            title: Text('Item 1'),
+            title: Text('Open Test UI Screen'),
             onTap: () {
               // Update the state of the app
               // ...
+              _openTestUIScreen();
             },
           ),
           ListTile(
@@ -119,6 +121,16 @@ class RandomWordsScreenState extends State<RandomWordsScreen> {
         timeInSecForIos: 1,
         textColor: Colors.white,
         fontSize: 16.0);
+  }
+
+  void _openTestUIScreen(){
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (BuildContext context) {
+          return TestUIScreen();
+        },
+      ),
+    );
   }
 
   void _pushSaved() {
